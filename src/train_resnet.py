@@ -9,6 +9,7 @@ from tensorflow.keras.applications.resnet50 import ResNet50
 import numpy as np
 import pandas as pd
 from sklearn.metrics import accuracy_score
+from sklearn.utils import class_weight
 
 from config import *
 
@@ -60,7 +61,7 @@ def save_learn_curve(history):
     plt.savefig(os.path.join( results_dir,'learning_curve.png'), bbox_inches='tight')
 
 def save_predictions(model, dict_gen):
-    datasets = ['train', 'val', 'test']
+    datasets = [ 'test', 'train', 'val']
     class_names = dict_gen.get('train').class_indices
     class_names = list(class_names.keys()) #lista com cada classe 
     print('class_names ', class_names)
@@ -77,6 +78,7 @@ def save_predictions(model, dict_gen):
         preds_name = [class_names[label_index] for label_index in preds_ids]
 
         predictons_df = pd.DataFrame({'filename':filenames,  'label': labels_name, 'prediction': preds_name})
+        print(predictons_df)
         predictons_df[class_names] = scores
         
         predictons_df.to_csv(os.path.join(results_dir, dataset+'-predictions.csv'), index=False)
@@ -92,17 +94,24 @@ def train_resnet(dict_gen: dict):
     print("Iniciando Treino")
 
     model = get_model()
-    
+    class_weights = class_weight.compute_class_weight(class_weight='balanced',
+                    classes=np.unique(dict_gen.get('train').classes), 
+                    y=dict_gen.get('train').classes
+                    )
+
+    class_weights = dict(zip(np.unique(dict_gen.get('train').classes), class_weights))
+
     history = model.fit(
-    dict_gen.get('train'),
-    validation_data = dict_gen.get('val'),
-    epochs=EPOCHS,
+        dict_gen.get('train'),
+        validation_data = dict_gen.get('val'),
+        class_weight=class_weights,
+        epochs=EPOCHS,
     )
     
     model.save(model_dir)
-    save_learn_curve(history)
     
-    save_predictions(model, dict_gen)
+    save_learn_curve(history)
+    #save_predictions(model, dict_gen)
     
     return 
 

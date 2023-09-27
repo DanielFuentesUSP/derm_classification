@@ -1,10 +1,11 @@
 import os
 
-imgs_dir="/media/luma/hd1t/Documentos/Mestrado/experimentos/dados/dermnet_teste/imgs"
-out_dir="/media/luma/hd1t/Documentos/Mestrado/experimentos/dados/dermnet_teste/results/experiment1"
+imgs_dir="/home/luma/Documents/workspace/data/pad/images/imgs_total"
+labels_csv="/home/luma/Documents/workspace/data/pad/images/metadata.csv"
+out_dir="/home/luma/Documents/workspace/data/pad/images/results/experiment1"
 
-N_CLASSES=3
-EPOCHS=2
+N_CLASSES=6
+EPOCHS=5
 LEARNING_RATE=0.001
 
 BATCH_SIZE = 16

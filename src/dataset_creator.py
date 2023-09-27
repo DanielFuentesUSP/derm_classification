@@ -41,6 +41,12 @@ def sample_data(train_images):
 
 
 def split_train_test(df_data):
+    if os.path.isfile(os.path.join(out_dir, 'train.csv')) and os.path.isfile(os.path.join(out_dir, 'test.csv')):
+        print("Carregando data split CSVs")
+        df_train=pd.read_csv(os.path.join(out_dir, 'train.csv'))
+        df_test=pd.read_csv(os.path.join(out_dir, 'test.csv'))
+        return df_train, df_test
+
     X_train, X_test, y_train, y_test = train_test_split(df_data['filename'], df_data['label'], shuffle=True, test_size=0.20, random_state=42)
 
     print("train: ", len(X_train))
@@ -105,19 +111,25 @@ def carrega_geradores(df_train, df_test):
 
 def load_data():
     print("Iniciando Carrega dataset!!")
-    total_images = sorted(glob(os.path.join(imgs_dir, "*/*.jpg")))
+    total_images = sorted(glob(os.path.join(imgs_dir, "*.png")))
     print("Total de imgs ", len(total_images))
-
-    # gera labels    
-    total_labels=gera_labels(total_images)
+    print(total_images[:5])
+    # gera labels  
     
+    if not labels_csv: 
+        total_labels=gera_labels(total_images)
+        df_data = pd.DataFrame({'filename': total_images, 'label': total_labels})
+    else:
+        data_dict = {}
+        labels_csv_df = pd.read_csv(labels_csv)
+        
+        labels_csv_df['filenames'] = labels_csv_df['img_id'].apply(lambda img_id: os.path.join(imgs_dir, img_id))
+        data_dict = {'filename': labels_csv_df['filenames'], 'label': labels_csv_df['diagnostic']}
+        df_data = pd.DataFrame(data_dict)
+        
     # salva dataset como csv    
-    df_data = pd.DataFrame({'filename': total_images, 'label': total_labels})
     df_data.to_csv(os.path.join(filenames_dir,'full_dataset.csv'), index=False)
-
-
     df_train, df_test = split_train_test(df_data)
-    
     dict_generator = carrega_geradores(df_train, df_test)
     
     return dict_generator
