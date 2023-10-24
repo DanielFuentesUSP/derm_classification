@@ -1,13 +1,25 @@
 #!/bin/bash
 #PBS -l select=1:ngpus=1
-#PBS -l walltime=00:10:00
+#PBS -l walltime=24:00:00  
 #PBS -j oe
 #PBS -V 
-#PBS -N TestJobLuma
+#PBS -N TreinamentoJobLuma
 
 # load modules
-module load cuda-toolkit/11.2.0 python/3.9.17 cudnn/8.0.5 gcc/12.2.0
+# module load cuda-toolkit/11.2.0 python/3.9.17 cudnn/8.0.5 gcc/12.2.0 NAMD/2.14-multicore-CUDA
+module load NAMD/2.14-multicore-CUDA 
 
+# conda remove -n tf --all
+# conda create --name tf python==3.7
+# conda search gcc
+# conda install gcc_linux-64=9.3.0
+# conda search cudnn
+# conda install cudnn=8.1.0
+# conda install -c conda-forge cudatoolkit=11.2.2 cudnn=8.1.0
+# conda update -n base -c defaults conda
+# conda update --all
+# python3 -m pip install tensorflow==2.10
+# https://gretel.ai/blog/install-tensorflow-with-cuda-cdnn-and-gpu-support-in-4-easy-steps
 # change directory
 #cd ${PBS_O_WORKDIR}
 cd "/home/luma/experiments"
@@ -17,7 +29,20 @@ echo ${PBS_O_WORKDIR}
 nvidia-smi
 
 eval "$(conda shell.bash hook)"
-conda activate derm_class
+conda activate tf
 
-python src/main.py  
-#python src/test_libs.py  > output/saida
+
+# Verify install:
+python3 -c "import tensorflow as tf; print(tf.config.list_physical_devices('GPU'))"
+python3 -c "import tensorflow as tf; print('Num GPUs Available: ', len(tf.config.list_physical_devices('GPU')))"
+
+python /home/luma/experiments/projects/derm_classification/src/main.py > /home/luma/experiments/data/results/unificados/vgg_200ep/output.txt
+# python /home/luma/experiments/projects/derm_classification/src/metrics.py > /home/luma/experiments/data/results/unificados/vgg_200ep/metric.txt
+
+# qstat -u luma
+# qsub /home/luma/experiments/projects/derm_classification/job_scripts/job-gpu.job 
+
+# CONF=/home/luma/experiments/data/results/unificados/default_100ep/filenames/train_good_config_file.csv
+# cd "/home/luma/experiments/projects/toolbox-image-classification"
+
+# python train.py -c $CONF -v --ov > /home/luma/experiments/data/results/unificados/default_100ep/output.txt

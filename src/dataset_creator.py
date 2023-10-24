@@ -8,16 +8,19 @@ import pandas as pd
 from sklearn.metrics import accuracy_score
 from keras.preprocessing.image import ImageDataGenerator
 from sklearn.model_selection import train_test_split
-
+from matplotlib import pyplot
 from config import *
 
 
 train_datagen = ImageDataGenerator(
     rescale=1. / 255,
     # shear_range=0.2,
-    zoom_range=0.2,
-    rotation_range=40,
+    rotation_range=10,
     horizontal_flip=True,
+    vertical_flip=True,
+    fill_mode='nearest',
+    brightness_range=[0.9,1.1],
+    zoom_range=[0.8, 1],
     validation_split=0.25
     )
 test_datagen = ImageDataGenerator(rescale=1. / 255)
@@ -109,13 +112,39 @@ def carrega_geradores(df_train, df_test):
     
     return dict_generator
 
+
+def save_aug(datagen):
+    # generate samples and plot
+    print(f"save aug in {results_dir}")
+    for i in range(9):
+        # define subplot
+        pyplot.subplot(330 + 1 + i)
+        # generate batch of images
+        batch = datagen.next()
+        # convert to unsigned integers for viewing
+        image=batch[0][0] 
+        # plot raw pixel data
+        pyplot.imshow(image)
+        pyplot.axis('off')
+
+        # show the figure
+    plt.axis('off')
+    plt.savefig(sample_aug_dir, bbox_inches='tight')
+    plt.close()
+
+
 def load_data():
     print("Iniciando Carrega dataset!!")
-    total_images = sorted(glob(os.path.join(imgs_dir, "*.png")))
+    total_images=[]
+    types = ('*.jpg', '*.png') # the tuple of file types
+    print(imgs_dir)
+    for f_type in types:
+        #total_images.extend(glob.glob(f_type))
+        total_images.extend(sorted(glob(os.path.join(imgs_dir, "*/"+f_type))))    
+    #total_images = sorted(glob(os.path.join(imgs_dir, "*/*.jpg")))
     print("Total de imgs ", len(total_images))
     print(total_images[:5])
     # gera labels  
-    
     if not labels_csv: 
         total_labels=gera_labels(total_images)
         df_data = pd.DataFrame({'filename': total_images, 'label': total_labels})
@@ -132,6 +161,8 @@ def load_data():
     df_train, df_test = split_train_test(df_data)
     dict_generator = carrega_geradores(df_train, df_test)
     
+    
+    save_aug(dict_generator.get('train'))
     return dict_generator
 
 if __name__ == "__main__":

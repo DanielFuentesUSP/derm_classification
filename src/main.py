@@ -1,7 +1,7 @@
 
 from config import *
 from dataset_creator import *
-from train_resnet import *
+from train import *
 from metrics import metrics
 
 if __name__ == "__main__":
