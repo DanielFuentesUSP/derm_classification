@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head> 
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>DermatologIA </title>
+  <!-- <link rel="shortcut icon" href="image/favicon.png" type="image/x-icon"> -->
+  <!-- Bootstrap , fonts & icons  -->
+  <link rel="stylesheet" href="./css/bootstrap.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+
+
+  <link rel="stylesheet" href="./fonts/icon-font/css/style.css">
+  <link rel="stylesheet" href="./fonts/typography-font/typo.css">
+  <link rel="stylesheet" href="./fonts/fontawesome-5/css/all.css">
+  <link href="https://fonts.googleapis.com/css2?family=Karla:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <!-- Plugin'stylesheets  -->
+  <link rel="stylesheet" href="./plugins/aos/aos.min.css">
+  <link rel="stylesheet" href="./plugins/fancybox/jquery.fancybox.min.css">
+  <!-- Vendor stylesheets  -->
+  <link rel="stylesheet" href="./css/main.css">
+  <link rel="stylesheet" href="./css/slider.css">
+
+  <!-- <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
+  <script defer src="https://pyscript.net/latest/pyscript.js"></script>
+  <script src="https://cdn.jsdelivr.net/pyodide/v0.22.1/full/pyodide.js"></script> -->
+
+  <!-- Custom stylesheet -->
+
+
+</head>
+
+<style>
+  .btn-static {
+
+    border: 1px solid lightgrey;
+    cursor: default;
+    background-color: #CC0000;
+    padding: 1px;
+    margin-right: 10px;
+    width: 25px;
+    height: 25px;
+    min-width: 15px;
+    height: 100%;
+
+    pointer-events: none;
+    
+  }
+
+  #nav-axial-tab.active {     
+    background-color: #e05929;  
+    color: white;
+  }
+
+  #nav-sagital-tab.active {     
+    background-color: #e05929;  
+    color: white;
+  }
+  .nav-link{color: white;}
+  .nav-link:hover {     
+    background-color: #e05929;  
+    color: white;
+  }
+  
+</style>
+
+
+<body data-theme-mode-panel-active data-theme="light" style="font-family: 'Mazzard H';">
+  <header
+    class="site-header site-header--menu-center dark-mode-texts landing-17-menu  site-header--absolute site-header--sticky">
+    <div class="container">
+      <nav class="navbar site-navbar">
+        <!-- Brand Logo-->
+        <div class="brand-logo">
+          <a href="#">
+            <!-- light version logo (logo must be black)-->
+            <!-- <img src="image/logo/logo-white.png" alt="" width="150px" class="light-version-logo"> -->
+            <!-- Dark version logo (logo must be White)-->
+            <!-- <img src="image/logo/logo-white.png" alt="" width="150px" class="dark-version-logo"> -->
+          </a>
+        </div>
+        <div class="menu-block-wrapper">
+          <div class="menu-overlay"></div>
+          <nav class="menu-block" id="append-menu-header">
+            <div class="mobile-menu-head">
+              <div class="go-back">
+                <i class="fa fa-angle-left"></i>
+              </div>
+              <div class="current-menu-title"></div>
+              <div class="mobile-menu-close">&times;</div>
+            </div>
+            <ul class="site-menu-main">
+            </ul>
+          </nav>
+        </div>
+        <!-- mobile menu trigger -->
+        <div class="mobile-menu-trigger">
+          <span></span>
+        </div>
+        <!--/.Mobile Menu Hamburger Ends-->
+      </nav>
+    </div>
+  </header>
+  <div class="main">
+    <div class="wrap">
+      <!-- Modal -->
+      <div class="modal fade " id="modal_img_result" tabindex="-1" aria-labelledby="modal_img_result"
+        aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+          <div class="modal-content" style="background: #1D263A; color: white">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Resultados</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class="container">
+                <div class="row">
+                  <table class="table table-dark">
+                    <thead>
+                      <tr>
+                        <th scope="col">Parâmetro</th>
+                        <th scope="col">Calculado pelo modelo</th>
+                        <th scope="col">Valor de referência</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>
+                          <span data-bs-toggle="tooltip" data-bs-placement="right" title="Skeletal Muscle Area">
+                            SMA (área da musculatura)
+                          </span>
+                        </td>
+                        <td id="muscle_area"></td>
+                        <td>-</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <span data-bs-toggle="tooltip" data-bs-placement="right" title="Skeletal Muscle Hounsfield Units">
+                            SMHU (atenuação média da musculatura em UH)
+                          </span>
+                        </td>
+                        <td id="muscle_pixel"></td>
+                        <td> M: > 29,3 UH - F > 22,0 UH</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <span data-bs-toggle="tooltip" data-bs-placement="right" title="Skeletal Muscle Index">
+                            SMI (área da musculatura / Altura ao quadrado
+                          </span>
+                        </td>
+                        <td id="muscle_area_height"></td>
+                        <td>M:> 41,6cm²/m² - F:> 32,0 cm²/m²</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <span data-bs-toggle="tooltip" data-bs-placement="right" title="Visceral-to-Subcutaneous Fat Ratio">
+                            VSR (relação entre gordura visceral e subcutânea)
+                          </span>
+                        </td>
+                        <td id="p_viscFat_subFat"></td>
+                        <td>
+                          < 0,40 </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <span data-bs-toggle="tooltip" data-bs-placement="right" title="Subcutaneous Fat Area">
+                            SFA (área de gordura subcutânea)
+                          </span>
+                        </td>
+                        <td id="sub_fat_area"></td>
+                        <td>-</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <span data-bs-toggle="tooltip" data-bs-placement="right" title="Visceral Fat Area">
+                            VFA (área de gordura visceral)
+                          </span>
+                          </td>
+                        <td id="visc_fat_area"></td>
+                        <td>-</td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+
+                  <nav>
+                    <!-- style="color: white;background-color: #e05929; " -->
+                    <div class="nav nav-tabs mb-3" id="nav-tab" role="tablist" style="color: white;">
+                      <button class="nav-link active" id="nav-axial-tab" data-bs-toggle="tab" data-bs-target="#nav-axial" type="button" role="tab" aria-controls="nav-axial" aria-selected="true" >Visão Axial</button>
+
+                      <button class="nav-link" id="nav-sagital-tab" data-bs-toggle="tab" data-bs-target="#nav-sagital" type="button" role="tab" aria-controls="nav-sagital" aria-selected="false" >Visão Sagital</button>
+                    </div>
+                  </nav>
+                  <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-pane fade show active" id="nav-axial" role="tabpanel" aria-labelledby="nav-axial-tab">
+                      <div class="text-center" id="img-result"></div>
+
+                      <div class="text-center" id="img-result"></div>
+                        <div class="text-center" id="img-legend" style=" display: flex;padding: 0;height: 4%;margin: 5% 0% 0 8%;justify-content: center;" >
+                        
+                          <div class="text-center" id="legend" style="display: flex; margin: 0 10% 0 0%;justify-content: center;">
+                            <button type="button" class="btn btn-static " style="background-color: #CC0000;width: 25px;
+                            height: 25px;"></button>  <p style="color:white; margin-top: 2px;" >Músculo</p> 
+                          </div>
+                      
+                          <div class="text-center" id="legend" style="display: flex; margin: 0 10% 0 0%;">
+                      
+                            <button type="button" class="btn btn-static " style="background-color: #FFFF00;width: 25px;
+                            height: 25px;"></button>  <p style="color:white; margin-top: 2px;" >Gordura Visceral</p> 
+                          </div>
+                      
+                          <div class="text-center" id="legend" style="    display: flex;flex-direction: row;">
+                      
+                            <button type="button" class="btn btn-static " style="background-color: #00FFFF; width: 25px;
+                            height: 25px; "></button>  <p style="color:white; margin-top: 2px;" >Gordura Subcutânea</p> 
+                          </div>
+                      </div>
+                      
+
+                    </div>
+
+                    <div class="tab-pane fade" id="nav-sagital" role="tabpanel" aria-labelledby="nav-sagital-tab">
+                      <div class="text-center" id="img-sagital-result" >
+                     
+                      </div>
+                      <div class="text-center" id="img-legend" style=" display: flex;padding: 0;height: 4%;margin: 5% 0% 0 8%;justify-content: center;" >
+                        
+                        <div class="text-center" id="legend" style="display: flex; margin: 0 10% 0 0%;justify-content: center;">
+                          <button type="button" class="btn btn-static " style="background-color: #f57e42;width: 25px;
+                          height: 25px;"></button>  <p style="color:white; margin-top: 2px;" >Fatia selecionada</p> 
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+
+
+
+                       
+
+                  <!-- <div class="text-center" >
+                    <div class="text-center" id="img-result"></div>
+                    <div class="text-center" id="img-legend" style="
+
+                    display: flex;
+                    padding: 0;
+                    height: 4%;
+                   margin: 5% 0% 0 8%;
+                    justify-content: center;
+                    
+                    " >
+                      
+                        <div class="text-center" id="legend" style="display: flex; margin: 0 10% 0 0%;justify-content: center;">
+                          <button type="button" class="btn btn-static " style="background-color: #CC0000;"></button>  <p style="color:white; margin-top: 2px;" >Músculo</p> 
+                        </div>
+                    
+                        <div class="text-center" id="legend" style="display: flex; margin: 0 10% 0 0%;">
+                    
+                          <button type="button" class="btn btn-static " style="background-color: #FFFF00;"></button>  <p style="color:white; margin-top: 2px;" >Gordura Visceral</p> 
+                        </div>
+                    
+                        <div class="text-center" id="legend" style="    display: flex;flex-direction: row;">
+                    
+                          <button type="button" class="btn btn-static " style="background-color: #00FFFF;"></button>  <p style="color:white; margin-top: 2px;" >Gordura Subcutânea</p> 
+                        </div>
+                    </div>
+                  </div>
+                   -->
+                </div>
+              </div>
+            </div>
+          <div class="modal-footer">
+            <p class="referencia" style="color:white !important;">
+              Van der Werf A et al. Percentiles for skeletal muscle index, area and radiation attenuation
+              based on
+              computed tomography imaging in a healthy Caucasian population. Eur J Clin Nutr. 2018;
+              72:288–96.
+            </p>
+            <p class="referencia" style="color:white !important;">
+              Fujioka S, Matsuzawa Y, Tokunaga K, Tarui S. Contribution of intra-abdominal fat
+              accumulation
+              to the impairment of glucose and lipid metabolism in human obesity. Metabolism 1987;36:54-9.
+            </p>
+          </div>
+        </div>
+
+        </div>
+      </div>
+    </div>
+
+
+    <!-- content and sidebar are swapped. They can be made to show in the order above with CSS
+          <div class="content"></div>
+          <div class="sidebar"></div> -->
+  </div>
+  <div class="wrap">
+    <!-- navbar- -->
+    <!-- Hero Area -->
+    <!-- <div class="hero-area-l-17 position-relative" style="padding-bottom: 40%; size: cover"> -->
+      <div class="hero-area-l-17 position-relative" style=" size: cover">
+      <div class="container">
+        <div class="row position-relative justify-content-center">
+          <div class="col-xxl-6 col-xl-7 col-lg-8 col-md-11 order-lg-1 order-1" data-aos="fade-right"
+            data-aos-duration="800" data-aos-once="true">
+
+            <div class="content text-center">
+              <div class="row">
+                <h1>DermatologIA</h1>
+                <p>
+                  Ferramenta baseada em Inteligência Artificial para classificação de lesões de pele.
+                </p>
+              </div>
+              <!-- <div id="loading" > -->
+              <!-- <div id="loading" style="display: flex; flex-direction: column;height: auto; "> -->
+
+                <div id="envioloading" style="height:auto;position:relative;flex-direction: column;margin-top: 2%;">
+                  <div class="row"
+                    style="display: flex;margin-top: 20px;;margin-bottom: 5px;flex-direction: row;align-items: center;">
+
+
+                  </div>
+
+                  <div class="row">
+                    <a href="#" class="btn pt-3" style="background: rgb(255, 255, 255)">
+                      <div class="box2">
+                        <div class="js--image-preview2"></div>
+                        <div class="upload-options2">
+                          <label>
+                            <input id="img-dicom" type="file" class="image-upload" accept=".png, .jpg"  />
+                          </label>
+                        </div>
+                      </div>
+                    </a>
+                  </div>
+ 
+                  <div class="row" style="margin-top: 30px;">
+                    <button type="button" id="processaBtn" class="btn btn-primary" style="color:white !important;">
+                      <!-- <button type="button" id="processaBtn" class="btn btn-primary" onclick="envia_exam(this);" > -->
+                      Enviar
+                    </button>
+                  </div>
+
+              </div> 
+
+                <div class="container text-center pt-3" style="padding-bottom: 3rem;">
+        
+                  <div class="row" style="margin-top: 5%;">
+                    <span>Esta é uma ferramenta de pesquisa que está em constante evolução.</span>
+                    <!-- <span>Entre em contato com sarcopenia@machiron.com.br para parcerias em projetos e publicações
+                      científicas</span> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+ 
+  <!--Footer Area-->
+  <footer class="footer-area-l-17 position-relative">
+    <!-- footer-bottom start -->
+    <!-- <h1 class="text-center white"> Colar o footer do site da Machiron </h1> -->
+    <!-- <div class="copyright-area-l-17 text-center text-md-start"> -->
+      <!-- <div > -->
+      <div class="container">
+        <!-- <div class="row align-items-center" style="color:white !important;"> -->
+
+          <!-- <p class="referencia" style="color:white !important;">
+            Não armazenamos nenhum tipo de arquivo ou dado pessoal, ou seja, assim que o arquivo é processado, ele é
+            automaticamente apagado.
+          </p> -->
+          <p class="referencia" style="color:white !important;">
+            Este é um protótipo de pesquisa montado para validar o conceito com pesquisadores e potenciais usuários. Seu
+            feedback é super importante para a evolução da ferramenta.
+          </p>
+        </div>
+        <!-- <div class="row align-items-center">
+          <div class="col-lg-4 col-md-4">
+            <div class="copyright">
+              <p> &copy; MaChiron 2023. </p>
+            </div>
+          </div>
+
+        </div> -->
+      </div>
+    </div>
+  </footer>
+</body>
+
+<!-- Vendor Scripts -->
+<script src="js/vendor.min.js"></script>
+<!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script> -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://unpkg.com/jszip@3.7.1/dist/jszip.js"></script>
+
+
+<!-- Plugin's Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.7/dist/loadingoverlay.min.js"></script>
+<script src="./plugins/fancybox/jquery.fancybox.min.js"></script>
+<script src="./plugins/aos/aos.min.js"></script>
+<script src="./plugins/menu/menu.js"></script>
+
+<!-- Activation Script -->
+<script src="js/custom.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<!-- <script src="js/forense.js"></script> -->
+<script src="js/sarcopenia.js"></script>
+
+<!-- TESTE ZIP  -->
+<script src="https://unpkg.com/cornerstone-core@2.2.6/dist/cornerstone.js"></script>
+<script src="https://unpkg.com/cornerstone-math@0.1.6/dist/cornerstoneMath.js"></script>
+<script src="https://unpkg.com/hammerjs@2.0.8/hammer.js"></script>
+<script src="https://unpkg.com/cornerstone-tools@4.0.5/dist/cornerstoneTools.js"></script>
+<script src="https://unpkg.com/dicom-parser/dist/dicomParser.js"></script>
+<script src="https://unpkg.com/cornerstone-wado-image-loader@3.0.2/dist/cornerstoneWADOImageLoader.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js" integrity="sha512-XMVd28F1oH/O71fzwBnV7HucLxVwtxf26XV8P4wPk26EDxuGZ91N8bsOttmnomcCD3CS5ZMRL50H0GgOHvegtg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script type="text/javascript" src="https://unpkg.com/dcmjs@0.29.6"></script>
+<script src="https://bundle.run/buffer@6.0.3"></script>
+
+<script src="./helpers/tcia.js"></script>
+<script src="./helpers/viewer.js"></script>
+
+<script src="./helpers/DICOMZero.js"></script>
+<script src="./js/FileSaver.min.js"></script>
+
+
+
+</html>
