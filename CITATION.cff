@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+authors:
+- family-names: "Gallacio Gomes Ferreira"
+  given-names: "Luma"
+  orcid: "https://orcid.org/0000-0003-1227-6031"
+title: "Dermatological Classification"
+version: 1.0.0
+date-released: 2023-12-01
+url: "https://github.com/lumagallacio/derm_classification"
